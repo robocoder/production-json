@@ -2,7 +2,7 @@
     "internal": [
         "LICENSE.md",
         "README.md",
-        "disclosure.json",
+        "publish.json",
         "schema.json",
         ".git/"
     ]

@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "$id": "https://github.com/robocoder/disclosure-json",
-    "description": "disclosure.json schema",
+    "$id": "https://github.com/robocoder/publish-json",
+    "description": "publish.json schema",
     "type": "object",
     "additionalProperties": false,
     "definitions": {

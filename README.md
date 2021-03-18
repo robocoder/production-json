@@ -1,10 +1,10 @@
-## production.json ##
+## publish.json ##
 
-A platform-agnostic JSON file (by convention, named `production.json`) that
+A platform-agnostic JSON file (by convention, named `publish.json`) that
 describes a project's production deployment in terms of the directories and/or
 files that are public, private, internal, and/or external.
 
-`production.json` describes the deployment of a project.
+TL;DR `publish.json` describes the deployment of a project.
 
 Example:
 ```
@@ -22,7 +22,7 @@ Example:
     "internal": [
         "CHANGELOG.md",
         ".git/",
-        "src/**/Tests/"
+        "src/*/Tests/"
     ],
     "external": [
         "vendor/"
@@ -37,16 +37,16 @@ libraries, modules, packages, etc), i.e., what they consume. In contrast, projec
 rarely specify how they are deployed. And if they do, there is no convention for
 doing so.
 
-| File             | Context | Usage                                                 |
-|-==---------------|---------|-------------------------------------------------------|
-| `box.json`       | php     | create .phar archives                                 |
-| `composer.json`  | php     | install package dependencies; create package archives |
-| `Gemfile`        | gem     | install Ruby gem dependencies                         |
-| `.gitattributes` | git     | create git archives                                   |
-| `package.json`   | npm     | install node module dependencies                      |
+File             | Context | Usage
+-----------------|---------|------------------------------------------------------
+`box.json`       | php     | create .phar archives
+`composer.json`  | php     | install package dependencies; create package archives
+`Gemfile`        | gem     | install Ruby gem dependencies
+`.gitattributes` | git     | create git archives
+`package.json`   | npm     | install node module dependencies
 
 It is good practice to deploy only the files required for the application/system
-to function. For example, if you deploy from git, you can consult `production.json`
+to function. For example, if you deploy from git, you can consult `publish.json`
 when constructing the deployment tree from your project repository.  The benefits of
 not deploying internal files to a public server include:
 * mitigation against fingerprinting (e.g., changelog files)
@@ -54,9 +54,12 @@ not deploying internal files to a public server include:
 
 ## Configuration ##
 
-Projects can choose what properties to set.
-This section provides guidance on how the
-A deployment tool may choose to `chmod` and/or `chown` these files.
+Projects can choose which properties to set. Declarations should be evaluated in the
+following order: `external`, `public`, `private`, and finally, `internal`.
+
+> TODO: Make sure all the combinations (where one or more properties is omitted) make sense.
+
+The paths are implicitly anchored, Unix-style globbing patterns.
 
 ### public ###
 
@@ -71,9 +74,9 @@ Possible Applications:
 
 ### private ###
 
-A list of paths are not publicly visible when deployed.
+A list of paths that are not publicly visible when deployed.
 
-If this property is not specified, no files are preseumed to be private.
+If this property is not specified, no files are presumed to be explicitly private.
 
 Possible Applications:
 * a deployment tool may further choose to `chmod` and/or `chown` these files
@@ -83,7 +86,7 @@ Possible Applications:
 
 A list of paths that should not be deployed.
 
-If this property is not specified, no project files should be held back from deployment.
+If this property is not specified, all non-public files should be held back from deployment.
 
 Possible Applications:
 * an audit tool may confirm absence of these files
@@ -91,15 +94,15 @@ Possible Applications:
 ### external ###
 
 A list of paths corresponding to external (e.g., third-party) dependencies that
-also provide `production.json`. Use this property to reduce the maintenance effort
+also provide `publish.json`. Use this property to reduce the maintenance effort
 of declaring those paths in other properties.
 
 Possible Applications:
-* a deployment tool may recurse through these paths to locate other `production.json` files
+* a deployment tool may recurse through these paths to locate other `publish.json` files
 
 ## Validation ##
 
-To validate your `production.json`, refer to `schema.json`.
+To validate your `publish.json`, refer to `schema.json`.
 
 JSON schema validators include:
 * https://github.com/justinrainbow/json-schema

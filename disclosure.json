@@ -1,0 +1,9 @@
+{
+    "internal": [
+        "LICENSE.md",
+        "README.md",
+        "disclosure.json",
+        "schema.json",
+        ".git/"
+    ]
+}

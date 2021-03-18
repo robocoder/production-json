@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://github.com/robocoder/disclosure-json",
+    "description": "disclosure.json schema",
+    "type": "object",
+    "additionalProperties": false,
+    "definitions": {
+        "pathlist": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "not": {
+                    "enum": ["", ".", ".."]
+                }
+            },
+            "default": [],
+            "uniqueItems": true
+        }
+    },
+    "properties": {
+        "public": {
+            "$ref": "#/definitions/pathlist"
+        },
+        "private": {
+            "$ref": "#/definitions/pathlist"
+        },
+        "internal": {
+            "$ref": "#/definitions/pathlist"
+        },
+        "external": {
+            "$ref": "#/definitions/pathlist"
+        }
+    }
+}
